@@ -56,6 +56,7 @@ def verify_proof(element,root,proof):
     print(h_verify == root)
     return h_verify == root
 
+# Given an element and a tree, compute a proof that the element is included in the leaves
 def compute_proof(element,tree):
     # Supporting functions    
     # Given the index of an element, return the index of the sibling
