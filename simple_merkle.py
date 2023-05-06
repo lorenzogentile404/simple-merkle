@@ -13,9 +13,10 @@ def h(v):
 # Supporting function to print the tree decently
 def print_tree(tree):
     print("tree =")  
-    for layer in reversed(tree[1:]):
-        print([l[0:HASH_TRUNC] + "..." for l in layer]) # Print only prefix of hashes
-    print(tree[0])
+    for i in range(len(tree)-1,0,-1):
+        layer = tree[i]
+        print("layer " + str(i) + ": " + ' '.join([l[0:HASH_TRUNC] + "..." for l in layer])) # Print only prefix of hashes
+    print("layer 0: " + ' '.join(tree[0]))
     print("\n")
 
 # Given the leaves of the tree, compute all the layers of the merkle tree
@@ -89,7 +90,7 @@ def compute_proof(element,tree):
     return(proof)
 
 # Compute tree and root starting from leaves
-leaves = ["000","001","010","011"]
+leaves = ["000","001","010","011","100","101"]
 tree,root = compute_tree(leaves)
 
 print_tree(tree)
@@ -100,6 +101,6 @@ for leave in leaves:
     print("\nelement to be checked = " + leave)
     assert(verify_proof(leave,root,compute_proof(leave, tree)))
 
-# Check a negative case
-# print("\nelement to be checked = " + "001")
-# assert(not(verify_proof("001",root,compute_proof("000", tree))))
+# Check an invalid proof
+print("\nelement to be checked (invalid proof) = " + "001")
+assert(not(verify_proof("001",root,compute_proof("000", tree))))
